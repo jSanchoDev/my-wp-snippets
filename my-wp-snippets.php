@@ -216,7 +216,7 @@ dynamic_sidebar('newsidebar');
 //========================================================================	
 //================================ JS Google Map template
 //========================================================================
-
+?>
 <script>
 function initialize() {
 
@@ -259,11 +259,11 @@ google.maps.event.addDomListener(window, "load", initialize);
 </script>
 
 <div id="map-canvas"></div>
-
+<?php
 //========================================================================
 //==================================== jQuery scripts in WordPress
 //========================================================================
-
+?>
 jquery							/wp-includes/js/jquery/jquery.js (v1.7.2 as of WP 3.3, v1.8.3 as of WP 3.5)
 jquery-ui-core					/wp-includes/js/jquery/ui/jquery.ui.core.min.js
 jquery-effects-core				/wp-includes/js/jquery/ui/jquery.effects.core.min.js
@@ -304,7 +304,7 @@ jquery-hotkeys					/wp-includes/js/jquery/jquery.hotkeys.js
 jquery-table-hotkeys			/wp-includes/js/jquery/jquery.table-hotkeys.js
 suggest							/wp-includes/js/jquery/suggest.js
 schedule						/wp-includes/js/jquery/jquery.schedule.js
-
+<?php
 //========================================================================
 //========================================================================
 
