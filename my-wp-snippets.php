@@ -146,11 +146,55 @@ $posts = get_posts( array(
                 'nopaging' => true,
                 'suppress_filters' => false
             ) );
+			
+//========================================================================	
+//================================ AJAX (multiple forms on different pages)
+//========================================================================	
+
+//------------------------------- First, in HTML
+?>	
+<form id="SomeMailForm"> <!-- simple form, with one user field and necessary hidden felds -->
+    <label for="name">Your name: </label>
+    <input id="name" name="name" value = "" type="text" /><br>
+    <input id="formID" name="formID" value = "join" type="hidden" /> <!-- form ID for processing function -->
+    <input name="action" type="hidden" value="my_ajax_hook" /> <!-- this puts the action my_ajax_hook into the serialized form -->
+    <input id="submit_button" value = "Join us!!!" type="button" onClick="submit_join();" /> <!-- assign our JS function to button click -->
+</form>
+<div id="response_join" class="response_area"></div> <!-- response will be here, should be display:none by default -->
+<?php
+//------------------------------- ... then, in js/ajax.js ...	
+function submit_join(){
+    jQuery.post(the_ajax_script.ajaxurl, jQuery("#SomeMailForm").serialize() // the_ajax_script.ajaxurl == admin-ajax.php, variable set by wp_localize_script(), see below
+        ,
+        function(my_response){
+            jQuery("#response_join").html(my_response);
+            jQuery("#response_join").fadeIn('800'); // or simply .show() it
+        }
+    );
+}
+//------------------------------- ... meanwhile in processing function (function.php/plugin)...
+function ajax_process(){
+        switch($_POST['formID']){
+            case 'join': // request from 1st form
+                echo "1st!";
+                break;
+            case 'another_form_id': // request from 2nd form
+                echo "2nd";
+                break;
+        }
+    die();// wordpress may print out a spurious zero without this - can be particularly bad if using json
+}
+//------------------------------- finally, necessary scripts init (function.php/plugin)			
+wp_register_script('my-ajax-handle', plugin_dir_url(dirname( __FILE__ )) . 'js/ajax.js'); //
+wp_enqueue_script( 'my-ajax-handle' );
+wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array('ajaxurl' => admin_url( 'admin-ajax.php'))); // pass a variable to our script
+add_action( 'wp_ajax_my_ajax_hook', 'ajax_process');
+add_action( 'wp_ajax_nopriv_my_ajax_hook', 'ajax_process');
 
 //========================================================================	
 //================================ Sidebar register
 //========================================================================			
-//-------------------- In functions
+//-------------------- In functions.php/plugin
 if (function_exists('register_sidebar')) {
     register_sidebar(array(
         'name' => 'New sidebar',
