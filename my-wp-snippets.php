@@ -306,6 +306,5 @@ suggest							/wp-includes/js/jquery/suggest.js
 schedule						/wp-includes/js/jquery/jquery.schedule.js
 <?php
 //========================================================================
-//========================================================================
 
 ?>
