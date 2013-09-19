@@ -38,7 +38,7 @@ register_post_type('new_cpt', array(
 ); }
 add_action('init', 'register_new_cpt');
 
-//================================ Register P2P connetction
+//================================ Register P2P connection
 
 $a_b_args = array(
     'name' => 'a_2_b', // name of relation
