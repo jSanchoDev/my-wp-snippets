@@ -4,7 +4,7 @@ Different php-snippets, needed for everyday work with Wordpress.
 */
 
 //========================================================================
-//=========================== Get Posts
+//=========================== Query args
 //========================================================================
 
 $args = array(
@@ -22,6 +22,29 @@ $args = array(
 	'post_parent'      => '',
 	'post_status'      => 'publish',
 	'suppress_filters' => true );
+	
+//========================================================================
+//=========================== Query args (taxonomy)
+//========================================================================
+	
+$args = array(
+	'post_type' => 'post',
+	'tax_query' => array(
+		'relation' => 'AND',
+		array(
+			'taxonomy' => 'movie_genre',
+			'field' => 'slug',
+			'terms' => array( 'action', 'comedy' )
+		),
+		array(
+			'taxonomy' => 'actor',
+			'field' => 'id',
+			'terms' => array( 103, 115, 206 ),
+			'operator' => 'NOT IN'
+		)
+	)
+);
+$query = new WP_Query( $args );	
 	
 //========================================================================	
 //=========================== Custom loop WP_Query
