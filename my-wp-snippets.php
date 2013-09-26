@@ -72,6 +72,64 @@ foreach($custom_posts as $post) : setup_postdata($post);
 endforeach;
 
 //========================================================================
+//=========================== wp_list_categories
+//========================================================================
+
+<?php $args = array(
+	'show_option_all'    => '',
+	'orderby'            => 'name',
+	'order'              => 'ASC',
+	'style'              => 'list',
+	'show_count'         => 0,
+	'hide_empty'         => 1,
+	'use_desc_for_title' => 1,
+	'child_of'           => 0,
+	'feed'               => '',
+	'feed_type'          => '',
+	'feed_image'         => '',
+	'exclude'            => '',
+	'exclude_tree'       => '',
+	'include'            => '',
+	'hierarchical'       => 1,
+	'title_li'           => __( 'Categories' ),
+	'show_option_none'   => __('No categories'),
+	'number'             => null,
+	'echo'               => 1,
+	'depth'              => 0,
+	'current_category'   => 0,
+	'pad_counts'         => 0,
+	'taxonomy'           => 'category',
+	'walker'             => null
+); 
+
+wp_list_categories($args);
+?>
+
+//========================================================================
+//=========================== Add custom taxonomy
+//========================================================================
+
+$category_labels = array(
+    'name' => _x('Project Categories', 'textdomain'),
+    'singular_name' => _x('Project Category', 'textdomain'),
+    'search_items' => __('Search Project Categories', 'textdomain'),
+    'all_items' => __('All Project Categories', 'textdomain'),
+    'parent_item' => __('Parent Project Category', 'textdomain'),
+    'edit_item' => __('Edit Project Category', 'textdomain'),
+    'update_item' => __('Update Project Category', 'textdomain'),
+    'add_new_item' => __('Add New Project Category', 'textdomain'),
+    'menu_name' => __('Project Categories', 'textdomain')
+);
+register_taxonomy("project-type",
+    array("portfolio"),
+    array("hierarchical" => true,
+        'labels' => $category_labels,
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array('slug' => 'project-type')
+    ));
+
+//========================================================================
 //=========================== Add custom JS/CSS
 //========================================================================
 
