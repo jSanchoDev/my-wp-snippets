@@ -341,6 +341,23 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 <div id="map-canvas"></div>
 <?php
+
+/*
+* Remove some widget from widgets and keep it for plugins
+*/
+
+add_action('widgets_init', 'widgethide_admin_init', 11);
+
+function widgethide_admin_init(){
+    global $pagenow;
+    if ($pagenow == "widgets.php" ){
+        unregister_widget("WP_Widget_Calendar");
+    }
+    else {
+        register_widget("WP_Widget_Calendar");
+    }
+}
+
 //========================================================================
 //==================================== jQuery scripts in WordPress
 //========================================================================
